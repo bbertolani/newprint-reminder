@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-02-24T16:27:25.300Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="CrEsImGYd3EFWyZF7Cxy" version="12.7.4" type="github" pages="3">
+<mxfile host="www.draw.io" modified="2020-02-24T17:03:01.608Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="APzKYKbWbcpZds7ephMC" version="12.7.4" type="github" pages="3">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Main">
     <mxGraphModel dx="1186" dy="773" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -116,7 +116,7 @@
         </UserObject>
         <UserObject label="Sent feedback to (SYSTEM)" tooltip="{&#xa;id: *,&#xa;order: order, &#xa;url: url, &#xa;status: 1,&#xa;notification: *&#xa;}" id="6r4r_ADBxa98YQ0TMKp4-10">
           <mxCell style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="6r4r_ADBxa98YQ0TMKp4-1">
-            <mxGeometry x="130" y="315" width="120" height="40" as="geometry" />
+            <mxGeometry x="130" y="315" width="130" height="35" as="geometry" />
           </mxCell>
         </UserObject>
         <mxCell id="6r4r_ADBxa98YQ0TMKp4-11" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#00CC00;" edge="1" parent="6r4r_ADBxa98YQ0TMKp4-1" source="6r4r_ADBxa98YQ0TMKp4-15" target="6r4r_ADBxa98YQ0TMKp4-10">
@@ -180,9 +180,6 @@
         </mxCell>
         <mxCell id="SgDweYhR4QqB-MHrO8yk-4" value="AE Send:&lt;br&gt;URL&lt;br&gt;JOB&lt;br&gt;EMAIL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="VVDg7964WISqAHS9_tG6-1" vertex="1">
           <mxGeometry x="280" y="270" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="s4WEIWqWkLJPz_RdzE52-0" value="How get these informations?" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e51400;strokeColor=#B20000;fontColor=#ffffff;" parent="VVDg7964WISqAHS9_tG6-1" vertex="1">
-          <mxGeometry x="280" y="340" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

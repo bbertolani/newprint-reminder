@@ -1,0 +1,15 @@
+version: '3'
+services:
+  reminder_system:
+    build: .
+    command: tail -F anything
+    ports:
+      - 8080:8080
+    volumes: 
+      - ./app:/app
+  reminder_mongodb:
+    image: mongo
+    expose: 
+      - 27017
+    ports:
+      - 27017:27017

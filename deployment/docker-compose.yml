@@ -1,14 +1,18 @@
-version: '3'
+version: '3.3'
 services:
   reminder_system:
     build: .
-    command: tail -F anything
+    command: python3 app.py
     ports:
       - 8080:8080
     volumes: 
-      - ./app:/app
+      - ../app:/app
   reminder_mongodb:
     image: mongo
+    volumes:
+      - type: bind
+        source: ../data
+        target: /data/db
     expose: 
       - 27017
     ports:

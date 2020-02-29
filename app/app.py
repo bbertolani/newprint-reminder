@@ -3,6 +3,7 @@ import sys
 from config.mongo import initMongo
 from flask import Flask, request
 from scripts.scripts import postReminder, getReminder, putInfo, getInfo
+from scripts.trigger import triggerReminder
 
 app = Flask(__name__)
 
@@ -20,8 +21,8 @@ def methodsInfo(order):
   if request.method == 'PUT':
     return putInfo(order, request.get_json())
 
-@app.route('/api/triggerRemider', methods=['GET', 'PUT'])
-def methodsTrigger(order):
+@app.route('/api/triggerRemider', methods=['GET'])
+def methodsTrigger():
   return triggerReminder()
   
 if __name__ == "__main__":

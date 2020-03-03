@@ -2,3 +2,6 @@
 .vscode
 examples
 data
+*.sh
+!*ENV.sh
+docker-compose.dev.yml

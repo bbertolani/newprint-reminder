@@ -7,9 +7,9 @@ initMongo()
 
 class Reminder(MongoModel):
     origin = fields.CharField(required=True)
-    order_number = fields.IntegerField(required=True)
+    order_number = fields.CharField(required=True)
     order_ID = fields.CharField(required=True)
-    item_ID = fields.IntegerField(blank=True)
+    item_ID = fields.CharField(blank=True)
     email = fields.EmailField(required=True)
     product_desc = fields.CharField(blank=True)
     project_title = fields.CharField(blank=True)

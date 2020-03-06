@@ -1,20 +1,21 @@
 import sys
+import os
 
 from config.mongo import initMongo
 from flask import Flask, request
 from scripts.scripts import postReminder, getReminder, putInfo, getInfo
 from scripts.trigger import triggerReminder
 
+if os.environ.get('ENV') == "DEV":
+    try:
+        import ptvsd
+        
+        ptvsd.enable_attach(address=("0.0.0.0", 5050))
+        print("ptvsd is started")
+        ptvsd.wait_for_attach()
 
-try:
-    import ptvsd
-    
-    ptvsd.enable_attach(address=("0.0.0.0", 5050))
-    print("ptvsd is started")
-    ptvsd.wait_for_attach()
-
-except:
-    print("Failed or running....")
+    except:
+        print("Failed or running....")
 
 app = Flask(__name__)
 

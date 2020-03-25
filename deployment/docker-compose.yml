@@ -4,16 +4,14 @@ services:
     build: .
     command: python3 app.py
     ports:
-      - 8080:8080
-    volumes: 
-      - ../app:/app
+        - 8080:8080
   reminder_mongodb:
     image: mongo
     volumes:
       - type: bind
         source: ../data
         target: /data/db
-    expose: 
-      - 27017
+    expose:
+            - 27017
     ports:
       - 27017:27017

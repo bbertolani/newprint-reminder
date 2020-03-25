@@ -9,7 +9,7 @@ from scripts.trigger import triggerReminder
 if os.environ.get('ENV') == "DEV":
     try:
         import ptvsd
-        
+
         ptvsd.enable_attach(address=("0.0.0.0", 5050))
         print("ptvsd is started")
         ptvsd.wait_for_attach()
@@ -42,4 +42,5 @@ def methodsTrigger():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    #app.run(host="0.0.0.0", port=8080, debug=False)
+    app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))

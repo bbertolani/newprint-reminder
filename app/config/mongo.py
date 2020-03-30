@@ -6,7 +6,8 @@ from pymodm import connect
 
 def initMongo():
     try:
-        client = connect("mongodb://host.docker.internal:27017/newprint")
+        mong = "mongodb://mongo_db:27017/newprint"
+        client = connect(mong)
     except:
         print("Mongo failed")
         sys.exit(1)

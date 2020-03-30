@@ -23,3 +23,5 @@
 **/values.dev.yaml
 README.md
 __pycache__
+examples
+deployment

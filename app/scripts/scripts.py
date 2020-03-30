@@ -8,6 +8,15 @@ from bson.json_util import dumps
 from models.reminder import Reminder
 
 
+def getStatus():
+    status = {"0": "Waiting Approval", "1": "Approved", "2": "Disapproved"}
+    return dumps(status)
+
+def getList():
+    obj = Reminder.objects.raw({"status": 1})
+    result = obj.values()
+    return result
+
 def getReminder():
     obj = Reminder.objects.all()
     result = obj.only("order_number", "order_ID", "item_ID").values()
@@ -18,7 +27,7 @@ def postReminder(request):
     origin = request.get("origin")
     order_number = str(request.get("order_number"))
     order_ID = str(request.get("order_ID"))
-    item_ID = str(request.get("item_ID")) or '0'
+    item_ID = str(request.get("item_ID")) or "0"
     email = request.get("email")
     product_desc = request.get("product_desc")
     project_title = request.get("project_title")

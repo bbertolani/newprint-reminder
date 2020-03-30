@@ -46,7 +46,7 @@ def methodsInfo(order_number, order_ID):
     if request.method == "GET":
         return getInfo(order_number, order_ID, request.get_json())
     if request.method == "PUT":
-        return putInfo(order_number, order_ID, request.get_json())
+        return putInfo(order_number, order_ID, request.get_json() or None)
 
 
 @app.route("/api/triggerRemider", methods=["GET"])

@@ -12,10 +12,12 @@ def getStatus():
     status = {"0": "Waiting Approval", "1": "Approved", "2": "Disapproved"}
     return dumps(status)
 
+
 def getList():
     obj = Reminder.objects.raw({"status": 1})
     result = obj.values()
     return result
+
 
 def getReminder():
     obj = Reminder.objects.all()
@@ -38,7 +40,7 @@ def postReminder(request):
     insert = False
 
     try:
-        Reminder.objects.get(
+        obj = Reminder.objects.get(
             {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
         )
         msg = {
@@ -48,7 +50,7 @@ def postReminder(request):
             "item_ID": item_ID,
             "notification": notification,
         }
-        if force == 1:
+        if force == 1 or obj.status == 2:
             Reminder.objects.get(
                 {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
             ).delete()

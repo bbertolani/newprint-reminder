@@ -30,6 +30,7 @@ def triggerReminder():
             xml += "<email>{}</email>".format(order["email"])
             xml += "<product_desc>{}</product_desc>".format(order["product_desc"])
             xml += "<url>{}</url>".format(order["url"])
+            xml += "<notification>{}</url>".format(order["notification"])
         else:
             xml += "<origin>{}</origin>".format(order["origin"])
             xml += "<order_number>{}</order_number>".format(order["order_number"])
@@ -39,6 +40,7 @@ def triggerReminder():
             xml += "<product_desc>{}</product_desc>".format(order["product_desc"])
             xml += "<project_title>{}</project_title>".format(order["project_title"])
             xml += "<url>{}</url>".format(order["url"])
+            xml += "<notification>{}</url>".format(order["notification"])
 
         xml += "</job>"
 

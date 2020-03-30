@@ -36,7 +36,7 @@ def postReminder(request):
     url = request.get("url")
     notification = request.get("notification")
     status = request.get("status")
-    force = request.get("force")
+    force = str(request.get("force"))
     insert = False
 
     try:

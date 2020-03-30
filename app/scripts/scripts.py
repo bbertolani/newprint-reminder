@@ -34,10 +34,10 @@ def postReminder(request):
     product_desc = request.get("product_desc")
     project_title = request.get("project_title")
     url = request.get("url")
-    notification = request.get("notification")
     status = request.get("status")
     force = str(request.get("force"))
     insert = False
+    notification = 1
 
     try:
         obj = Reminder.objects.get(
@@ -45,12 +45,12 @@ def postReminder(request):
         )
         msg = {
             "msg": "Order already waiting approval",
-            "order_number": order_number,
-            "order_ID": order_ID,
-            "item_ID": item_ID,
-            "notification": notification,
+            "order_number": obj.order_number,
+            "order_ID": obj.order_ID,
+            "item_ID": obj.item_ID,
+            "notification": obj.notification
         }
-        if force == 1 or obj.status == 2:
+        if force == '1' or obj.status == 2:
             Reminder.objects.get(
                 {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
             ).delete()
@@ -99,7 +99,6 @@ def putInfo(order_number, order_ID, request):
     order_number = str(order_number)
     order_ID = str(order_ID)
     item_ID = str(request.get("item_ID"))
-    notification = request.get("notification")
     status = request.get("status")
 
     try:
@@ -108,8 +107,9 @@ def putInfo(order_number, order_ID, request):
         )
         if status != "None":
             orderReminder.update({"$set": {"status": status}})
-        if notification != "None":
-            orderReminder.update({"$set": {"notification": notification}})
+
+        calcNotification = orderReminder.notification + 1
+        orderReminder.update({"$set": {"notification": calcNotification}})
         msg = {
             "msg": "Order Update",
             "order_number": order_number,

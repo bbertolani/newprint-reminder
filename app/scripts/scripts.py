@@ -48,9 +48,9 @@ def postReminder(request):
             "order_number": obj.order_number,
             "order_ID": obj.order_ID,
             "item_ID": obj.item_ID,
-            "notification": obj.notification
+            "notification": obj.notification,
         }
-        if force == '1' or obj.status == 2:
+        if force == "1" or obj.status == 2:
             Reminder.objects.get(
                 {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
             ).delete()
@@ -105,17 +105,29 @@ def putInfo(order_number, order_ID, request):
         orderReminder = Reminder.objects.raw(
             {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
         )
-        if status != "None":
+        if status == 1:
             orderReminder.update({"$set": {"status": status}})
-
-        calcNotification = orderReminder.notification + 1
-        orderReminder.update({"$set": {"notification": calcNotification}})
-        msg = {
-            "msg": "Order Update",
-            "order_number": order_number,
-            "order_ID": order_ID,
-            "item_ID": item_ID,
-        }
+            msg = {
+                "msg": "Order Approved",
+                "order_number": order_number,
+                "order_ID": order_ID,
+                "item_ID": item_ID,
+            }
+            Reminder.objects.raw(
+                {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
+            ).delete()
+        else:
+            obj = Reminder.objects.get(
+                {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
+            )
+            calcNotification = obj.notification + 1
+            orderReminder.update({"$set": {"notification": calcNotification}})
+            msg = {
+                "msg": "Order Update",
+                "order_number": order_number,
+                "order_ID": order_ID,
+                "item_ID": item_ID,
+            }
     except Reminder.DoesNotExist:
         msg = {
             "msg": "Order not found",

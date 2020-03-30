@@ -3,3 +3,4 @@ pymongo
 pymodm
 requests
 ptvsd
+flask-bootstrap

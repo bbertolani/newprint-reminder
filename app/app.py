@@ -1,15 +1,16 @@
-import sys
 import os
+import sys
 
 from config.mongo import initMongo
-from flask import Flask, request
-from scripts.scripts import postReminder, getReminder, putInfo, getInfo
+from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
+from scripts.scripts import getInfo, getReminder, getStatus, postReminder, putInfo, getList
 from scripts.trigger import triggerReminder
 
-if os.environ.get('ENV') == "DEV":
+if os.environ.get("ENV") == "DEV":
     try:
         import ptvsd
-        
+
         ptvsd.enable_attach(address=("0.0.0.0", 5050))
         print("ptvsd is started")
         ptvsd.wait_for_attach()
@@ -18,6 +19,18 @@ if os.environ.get('ENV') == "DEV":
         print("Failed or running....")
 
 app = Flask(__name__)
+Bootstrap(app)
+
+
+@app.route("/status", methods=["GET"])
+def status():
+    if request.method == "GET":
+        return getStatus()
+
+
+@app.route("/api/list", methods=["GET"])
+def listReminder():
+    return render_template("list.html", values=getList())
 
 
 @app.route("/api/reminder", methods=["GET", "POST"])

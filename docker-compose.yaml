@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+    reminder_system:
+        build: .
+        command: python3 app.py
+        ports:
+            - 8080:8080
+        depends_on:
+            - reminder_mongodb
+        networks:
+            - newprint
+    reminder_mongodb:
+        image: mongo
+        volumes:
+            - type: bind
+              source: ./data
+              target: /data/db
+        ports:
+            - 27017:27017
+        container_name: "mongo_db"
+        networks:
+            - newprint
+networks:
+    newprint:
+        driver: bridge

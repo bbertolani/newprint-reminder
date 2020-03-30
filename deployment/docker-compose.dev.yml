@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  reminder_system:
+    volumes:
+      - ./app:/app
+    environment:
+      - ENV=DEV
+    ports:
+      - 5050:5050

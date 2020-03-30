@@ -1,0 +1,29 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}List of Items waiting approval{% endblock %}
+
+{% block content %}
+<h1>Items</h1>
+<table class="table">
+<thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Origin</th>
+        <th scope="col">Order ID</th>
+        <th scope="col">Item ID</th>
+        <th scope="col">Notification</th>
+    </tr>
+</thead>
+<tbody>
+    {% for item in values %}
+    <tr>
+        <th scope="row">{{item.order_number}}</th>
+        <th scope="row">{{item.origin}}</th>
+        <th scope="row">{{item.order_ID}}</th>
+        <th scope="row">{{item.item_ID}}</th>
+        <th scope="row">{{item.notification}}</th>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

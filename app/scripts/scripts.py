@@ -98,8 +98,8 @@ def postReminder(request):
 def putInfo(order_number, order_ID, request):
     order_number = str(order_number)
     order_ID = str(order_ID)
-    item_ID = str(request.get("item_ID"))
-    status = request.get("status")
+    item_ID = str(request.get("item_ID")) or None
+    status = request.get("status") or None
 
     try:
         orderReminder = Reminder.objects.raw(

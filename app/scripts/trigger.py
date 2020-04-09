@@ -13,7 +13,7 @@ from models.reminder import Reminder
 def triggerReminder():
     obj = Reminder.objects.raw({"status": 0})
     result = obj.values()
-    SWITCH_URL = "http://192.168.0.144:51059/test"
+    SWITCH_URL = os.environ.get('SWITCH', "http://174.114.117.38:51059/reminder_input")
 
     for order in list(result):
         msg = "INIT Order:{} Part:{} - {}".format(

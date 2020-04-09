@@ -14,7 +14,7 @@ def getStatus():
 
 
 def getList():
-    obj = Reminder.objects.raw({"status": 1})
+    obj = Reminder.objects.raw({"status": 0})
     result = obj.values()
     return result
 

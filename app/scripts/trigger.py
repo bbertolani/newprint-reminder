@@ -11,10 +11,9 @@ from models.reminder import Reminder
 
 
 def triggerReminder():
-    obj = Reminder.objects.raw({"status": 1})
+    obj = Reminder.objects.raw({"status": 0})
     result = obj.values()
-
-    SWITCH_URL = "http://192.168.0.144:51080/test"
+    SWITCH_URL = "http://192.168.0.144:51059/test"
 
     for order in list(result):
         msg = "INIT Order:{} Part:{} - {}".format(
@@ -40,7 +39,7 @@ def triggerReminder():
             xml += "<product_desc>{}</product_desc>".format(order["product_desc"])
             xml += "<project_title>{}</project_title>".format(order["project_title"])
             xml += "<url>{}</url>".format(order["url"])
-            xml += "<notification>{}</url>".format(order["notification"])
+            xml += "<notification>{}</notification>".format(order["notification"])
 
         xml += "</job>"
 

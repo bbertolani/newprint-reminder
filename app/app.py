@@ -1,10 +1,12 @@
 import os
 import sys
 
+from apscheduler.schedulers.blocking import BlockingScheduler
 from config.mongo import initMongo
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
-from scripts.scripts import getInfo, getReminder, getStatus, postReminder, putInfo, getList
+from scripts.scripts import (getInfo, getList, getReminder, getStatus,
+                             postReminder, putInfo)
 from scripts.trigger import triggerReminder
 
 if os.environ.get("ENV") == "DEV":
@@ -53,6 +55,10 @@ def methodsInfo(order_number, order_ID):
 def methodsTrigger():
     return triggerReminder()
 
+sched = BlockingScheduler()
+@sched.scheduled_job('cron', hour='8', timezone='America/Montreal')
+def methodsAutoTrigger():
+    triggerReminder()
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0", port=8080, debug=False)

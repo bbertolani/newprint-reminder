@@ -5,6 +5,6 @@ services:
       - ./app:/app
     environment:
       - ENV=DEV
-      - SWITCH=http://192.168.0.144:51059/reminder_input
+      - SWITCH=http://192.168.0.144:51059/dev_reminder_input
     ports:
       - 5050:5050

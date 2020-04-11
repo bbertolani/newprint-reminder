@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+  reminder_system:
+    environment:
+      - ENV=PROD
+      - SWITCH=http://192.168.0.144:51059/prod_reminder_input

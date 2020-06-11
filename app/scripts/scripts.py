@@ -14,7 +14,7 @@ def getStatus():
 
 
 def getList():
-    obj = Reminder.objects.raw({"status": 0})
+    obj = Reminder.objects.all()
     result = obj.values()
     return result
 
@@ -24,6 +24,37 @@ def getReminder():
     result = obj.only("order_number", "order_ID", "item_ID").values()
     return dumps(result)
 
+def deleteRegisters(request):
+    order_number = str(request.get("order_number"))
+    order_ID = str(request.get("order_ID"))
+    item_ID = str(request.get("item_ID")) or "0"
+
+    try:
+        obj = Reminder.objects.get(
+            {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
+        )
+        Reminder.objects.get(
+                {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
+            ).delete()
+        msg = {
+            "msg": "Order Delete",
+            "order_number": order_number,
+            "order_ID": order_ID,
+            "item_ID": item_ID,
+            }
+    except Reminder.DoesNotExist:
+        msg = {
+            "msg": "Order not found",
+            "order_number": order_number,
+            "order_ID": order_ID,
+            "item_ID": item_ID,
+        }
+    except:
+        msg:{
+            'msg': 'Failed'
+        }
+
+    return msg
 
 def postReminder(request):
     origin = request.get("origin")
@@ -102,10 +133,27 @@ def putInfo(order_number, order_ID, request):
     status = request.get("status") or None
 
     try:
-        orderReminder = Reminder.objects.raw(
+        checkReminder = Reminder.objects.get(
             {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
         )
-        if status == 1:
+    except Reminder.DoesNotExist:
+        msg = {
+            "msg": "Order not found",
+            "order_number": order_number,
+            "order_ID": order_ID,
+            "item_ID": item_ID,
+        }
+        return msg
+
+    if status not in [1,2,0, None]:
+        return "Fail Status:" + str(status)
+    
+    orderReminder = Reminder.objects.raw(
+            {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
+        )
+
+
+    if status == 1:
             orderReminder.update({"$set": {"status": status}})
             msg = {
                 "msg": "Order Approved",
@@ -116,25 +164,25 @@ def putInfo(order_number, order_ID, request):
             Reminder.objects.raw(
                 {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
             ).delete()
-        else:
-            obj = Reminder.objects.get(
-                {"order_number": order_number, "order_ID": order_ID, "item_ID": item_ID}
-            )
-            calcNotification = obj.notification + 1
-            orderReminder.update({"$set": {"notification": calcNotification}})
-            msg = {
-                "msg": "Order Update",
-                "order_number": order_number,
-                "order_ID": order_ID,
-                "item_ID": item_ID,
-            }
-    except Reminder.DoesNotExist:
+    elif status == 2:
+        orderReminder.update({"$set": {"status": status}})
         msg = {
-            "msg": "Order not found",
+            "msg": "Order Not Approved",
             "order_number": order_number,
             "order_ID": order_ID,
             "item_ID": item_ID,
         }
+    elif status == 0 or status == None:
+        calcNotification = checkReminder.notification + 1
+        orderReminder.update({"$set": {"notification": calcNotification}})
+        msg = {
+            "msg": "Order Update",
+            "order_number": order_number,
+            "order_ID": order_ID,
+            "item_ID": item_ID,
+        }
+    else:
+        return "fail"
 
     return msg
 

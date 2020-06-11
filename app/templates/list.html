@@ -1,29 +1,56 @@
-{% extends "bootstrap/base.html" %}
-{% block title %}List of Items waiting approval{% endblock %}
-
-{% block content %}
-<h1>Items</h1>
+{% extends "bootstrap/base.html" %} {% block title %}List of Items waiting
+approval{% endblock %} {% block content %}
+<h1>Email Information</h1>
+<h6>0: Waiting Approval, 1: Approved, 2: Disapproved</h6>
+<br>
 <table class="table">
-<thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Origin</th>
-        <th scope="col">Order ID</th>
-        <th scope="col">Item ID</th>
-        <th scope="col">Notification</th>
-    </tr>
-</thead>
-<tbody>
-    {% for item in values %}
-    <tr>
-        <th scope="row">{{item.order_number}}</th>
-        <th scope="row">{{item.origin}}</th>
-        <th scope="row">{{item.order_ID}}</th>
-        <th scope="row">{{item.item_ID}}</th>
-        <th scope="row">{{item.notification}}</th>
-    </tr>
-    {% endfor %}
-</tbody>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Origin</th>
+            <th scope="col">Order ID</th>
+            <th scope="col">Item ID</th>
+            <th scope="col">Notification</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in values %}
+        <tr id="{{item.order_number}}">
+            <td scope="row">{{item.order_number}}</td>
+            <td scope="row">{{item.origin}}</td>
+            <td scope="row">{{item.order_ID}}</td>
+            <td scope="row">{{item.item_ID}}</td>
+            <td scope="row">{{item.notification}}</td>
+            <td scope="row">{{item.status}}</td>
+            <td><a href="/list" class="delete1" id="delete">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
-
+{% endblock %} {% block scripts %} {{ super() }}
+<script>
+    $(function () {
+        $(".delete1").click(function () {
+            var tr = $(this).closest("tr"),
+                order_number = tr.attr("id"),
+                order_ID = tr.find("td:eq(2)").text(),
+                item_ID = tr.find("td:eq(3)").text()
+            $.ajax({
+                url: "/api/delete ",
+                type: "POST",
+                data: JSON.stringify({order_number, order_ID, item_ID}),
+                contentType: "application/json;charset=UTF-8",
+                success: function () {
+                    alert('Order_Number: ' + order_number + ' Order_ID: ' + order_ID + ' Item_ID: ' + item_ID + ' was deleted');
+                },
+                error: function (req, status, err) {
+                    console.log(status, err);
+                    alert(status + " " + err);
+                },
+            });
+        });
+    });
+</script>
 {% endblock %}

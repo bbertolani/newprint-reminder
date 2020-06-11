@@ -1,31 +1,34 @@
 import os
 import sys
 
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from config.mongo import initMongo
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from scripts.scripts import (getInfo, getList, getReminder, getStatus,
-                             postReminder, putInfo)
+                             postReminder, putInfo, deleteRegisters)
 from scripts.trigger import triggerReminder
 
-if os.environ.get("ENV") == "DEV":
+""" if os.environ.get("ENV") == "DEV":
     try:
         import ptvsd
 
         ptvsd.enable_attach(address=("0.0.0.0", 5050))
         print("ptvsd is started")
-        ptvsd.wait_for_attach()
+        #ptvsd.wait_for_attach()
 
     except:
-        print("Failed or running....")
+        print("Failed or running....") """
 
 app = Flask(__name__)
 Bootstrap(app)
 
-sched = BlockingScheduler()
-sched.add_job(triggerReminder,'cron', hour=8, timezone='America/Montreal')
-sched.start()
+try:
+    sched = BackgroundScheduler(daemon=True)
+    sched.add_job(triggerReminder,'cron', hour=8)
+    sched.start()
+except:
+    print('Can\'t start the scheduler')
 
 @app.route("/status", methods=["GET"])
 def status():
@@ -33,7 +36,7 @@ def status():
         return getStatus()
 
 
-@app.route("/api/list", methods=["GET"])
+@app.route("/list", methods=["GET"])
 def listReminder():
     return render_template("list.html", values=getList())
 
@@ -45,6 +48,10 @@ def methodsReminder():
     if request.method == "POST":
         return postReminder(request.get_json())
 
+@app.route("/api/delete", methods=["POST"])
+def deleteRegister():
+    if request.method == "POST":
+        return deleteRegisters(request.get_json())
 
 @app.route("/api/reminder/<order_number>/<order_ID>", methods=["GET", "PUT"])
 def methodsInfo(order_number, order_ID):
